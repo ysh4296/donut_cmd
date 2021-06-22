@@ -87,6 +87,7 @@ int main() {
 		printf("\x1b[H");
 		print_donut();
 		xdegree += 0.04;
+		break;
 	}
 	return 0;
 }
