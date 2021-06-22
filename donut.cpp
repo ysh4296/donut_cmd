@@ -53,12 +53,12 @@ int main() {
 	float xdegree = 0;
 	float zdegree = 0;
 	Point init = Point(100, 0, 0);
-	float r = 80;
+	float r = 60;
 	while (1) {
 		for (int r = 0; r < Screen_Max_height; r++) {
 			for (int c = 0; c < Screen_Max_width; c++) {
 				Frame_buffer[r][c] = ' ';
-				z_index[r][c] = 1;
+				z_index[r][c] = 0;
 			}
 		}
 		for (float i = 0; i < 6.28; i += 0.07) {//make a circle
@@ -66,8 +66,8 @@ int main() {
 			for (float j = 0; j < 6.28 ; j += 0.02) {//rotate to y to make a donut
 				P = Rotate_Z(Rotate_X(Rotate_Y(P, j),xdegree),zdegree);
 				float depth = 1 / (P.z+200);
-				int sx = (P.x * 30)*depth;//screen index x
-				int sy = (P.y * 30)*depth;//screen index y
+				int sx = (P.x * 25)/(P.z+200);//screen index x
+				int sy = (P.y * 25)/(P.z+200);//screen index y
 				Point Normal_Vector = Point(cos(i), sin(i), 0);
 				Normal_Vector = Rotate_Z(Rotate_X(Rotate_Y(Normal_Vector, j), xdegree), zdegree);
 				float Dot = Dot_Product(Normal_Vector, Point(0, 1, -1));
@@ -76,7 +76,7 @@ int main() {
 				int Illumination = 8*Dot;
 				if (Illumination < 0) Illumination = 0;
 				if ( mx+sx >= 0 && mx+sx <= 40 && my+sy >= 0 && my+sy <= 20) {
-					if (z_index[my + sy][mx + sx] > depth) {
+					if (z_index[my + sy][mx + sx] < depth) {
 						z_index[my + sy][mx + sx] = depth;
 						Frame_buffer[my + sy][mx + sx] = ".,-~:;=!*#$@"[Illumination];
 					}
