@@ -78,9 +78,9 @@ int main() {
 				int Illumination = 8*Dot;
 				if (Illumination < 0) Illumination = 0;
 				if ( mx+sx >= 0 && mx+sx <= 40 && my+sy >= 0 && my+sy <= 30) {// if the point is in the screen
-					if (z_index[my + sy][mx + sx] < depth) {
+					if (z_index[my + sy][mx + sx] < depth) {//if cur point is the closest to the view point
 						z_index[my + sy][mx + sx] = depth;
-						Frame_buffer[my + sy][mx + sx] = Bright[Illumination];
+						Frame_buffer[my + sy][mx + sx] = Bright[Illumination];//calculate illuminance
 					}
 				}
 			}
