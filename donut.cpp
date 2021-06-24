@@ -76,11 +76,12 @@ int main() {
 				int mx = 20;//move to middle point
 				int my = 15;//move to middle point
 				int Illumination = 8*Dot;
-				if (Illumination < 0) Illumination = 0;
+				//if (Illumination < 0) Illumination = 0;
 				if ( mx+sx >= 0 && mx+sx <= 40 && my+sy >= 0 && my+sy <= 30) {// if the point is in the screen
-					if (z_index[my + sy][mx + sx] < depth) {//if cur point is the closest to the view point
+					if (z_index[my + sy][mx + sx] < depth) {
 						z_index[my + sy][mx + sx] = depth;
-						Frame_buffer[my + sy][mx + sx] = Bright[Illumination];//calculate illuminance
+						if (Illumination < 0) Frame_buffer[my + sy][mx + sx] = '\'';
+						else Frame_buffer[my + sy][mx + sx] = Bright[Illumination];
 					}
 				}
 			}
@@ -88,6 +89,7 @@ int main() {
 		printf("\x1b[H");//stick cusor to the home
 		print_donut();//print cur screen
 		//rotate x axes and z axes
+		Sleep(10);
 		xdegree += 0.15; 
 		zdegree -= 0.1;
 	}
